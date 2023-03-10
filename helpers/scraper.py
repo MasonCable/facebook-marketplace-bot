@@ -163,6 +163,13 @@ class Scraper:
 				return False
 
 		return element
+	
+	def scroll_and_enter(self, element, scrollLength):
+		for i in range(scrollLength):
+			element.send_keys(Keys.ARROW_DOWN)
+			time.sleep(1)
+		element.send_keys(Keys.ENTER)
+							
 
 	def find_element_by_xpath(self, xpath, exit_on_missing_element = True, wait_element_time = None):
 		if wait_element_time is None:

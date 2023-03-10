@@ -1,3 +1,5 @@
+from selenium.webdriver.common.keys import Keys
+
 # Remove and then publish each listing
 def update_listings(listings, type, scraper):
 	# If listings are empty stop the function
@@ -60,7 +62,7 @@ def publish_listing(data, listing_type, scraper):
 	# Call function by name dynamically
 	globals()[function_name](data, scraper)
 	
-	scraper.element_send_keys('label[aria-label="Price"] input', data['Price'])
+	# scraper.element_send_keys('label[aria-label="Price"] input', data['Price'])
 	scraper.element_send_keys('label[aria-label="Description"] textarea', data['Description'])
 	scraper.element_send_keys('label[aria-label="Location"] input', data['Location'])
 	scraper.element_click('ul[role="listbox"] li:first-child > div')
@@ -128,21 +130,28 @@ def add_fields_for_vehicle(data, scraper):
 # Add specific fields for listing from type item
 def add_fields_for_item(data, scraper):
 	scraper.element_send_keys('label[aria-label="Title"] input', data['Title'])
+	scraper.element_send_keys('label[aria-label="Price"] input', data['Price'])
 
 	# Scroll to "Category" select field
 	scraper.scroll_to_element('label[aria-label="Category"]')
 	# Expand category select
 	scraper.element_click('label[aria-label="Category"]')
-	# Select category
-	scraper.element_click_by_xpath('//span[text()="' + data['Category'] + '"]')
+	scraper.element_send_keys('label[aria-label="Category"] input', data['Category'])	
+	# Expand condition select
+	scraper.element_click('label[aria-label="Condition"]')		
+	# scraper.element_click_by_xpath("//span[@dir='auto'][text()='Use - Like New']")
+	condition = scraper.find_element('label[aria-label="Condition"]')
+	conditionArr = ['New', 'Used - Like New', 'Used - Good', 'Used Fair']
+	conditionScrollLen = conditionArr.index(data['Condition']) + 1 if data['Condition'] in conditionArr else - 1
+	scraper.scroll_and_enter(condition, conditionScrollLen)	
+	
+	# Select share with friends
 
-	# Expand category select
-	scraper.element_click('label[aria-label="Condition"]')
-	# Select category
-	scraper.element_click_by_xpath('//span[@dir="auto"][text()="' + data['Condition'] + '"]')
-
-	if data['Category'] == 'Sports & Outdoors':
-		scraper.element_send_keys('label[aria-label="Brand"] input', data['Brand'])
+	scraper.element_click_by_xpath("//*[contains(text(), 'More Details')]")
+	
+		
+	
+	
 
 def generate_title_for_listing_type(data, listing_type):
 	title = ''
