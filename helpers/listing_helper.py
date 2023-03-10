@@ -146,7 +146,9 @@ def add_fields_for_item(data, scraper):
 	scraper.scroll_and_enter(condition, conditionScrollLen)	
 	
 	# Select share with friends
-
+	if data['HideFromFriends']:
+		scraper.element_click_by_xpath("//*[contains(text(), 'Hide from friends')]")
+	# Expand More details for other data to be added
 	scraper.element_click_by_xpath("//*[contains(text(), 'More Details')]")
 	
 		
