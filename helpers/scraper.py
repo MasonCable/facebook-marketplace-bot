@@ -228,8 +228,7 @@ class Scraper:
 			self.driver.execute_script("arguments[0].click();", element)
 
 		element.send_keys(text)
-		if scrollThenClick:
-			print('test')
+		if scrollThenClick:			
 			element.send_keys(Keys.ARROW_DOWN)
 			element.send_keys(Keys.ENTER)
 

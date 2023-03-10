@@ -61,10 +61,9 @@ def publish_listing(data, listing_type, scraper):
 	function_name = 'add_fields_for_' + listing_type
 	# Call function by name dynamically
 	globals()[function_name](data, scraper)
-	
-	# scraper.element_send_keys('label[aria-label="Price"] input', data['Price'])
+		
 	scraper.element_send_keys('label[aria-label="Description"] textarea', data['Description'])
-	scraper.element_send_keys('label[aria-label="Location"] input', data['Location'])
+	scraper.element_send_keys('label[aria-label="Location"] input', data['Location'], scrollThenClick=True)
 	scraper.element_click('ul[role="listbox"] li:first-child > div')
 
 	next_button_selector = 'div [aria-label="Next"] > div'
@@ -152,6 +151,8 @@ def add_fields_for_item(data, scraper):
 		scraper.element_click_by_xpath("//*[contains(text(), 'Hide from friends')]")
 	# Expand More details for other data to be added
 	scraper.element_click_by_xpath("//*[contains(text(), 'More Details')]")
+	# Click the next button
+	scraper.element_click_by_xpath("//*[contains(text(), 'Next')]")
 
 	time.sleep(100)
 	
