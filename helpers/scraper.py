@@ -216,7 +216,7 @@ class Scraper:
 			self.driver.execute_script("arguments[0].click();", element)
 
 	# Wait random time before sending the keys to the element
-	def element_send_keys(self, selector, text, delay = True):
+	def element_send_keys(self, selector, text, delay = True, scrollThenClick = False):
 		if delay:
 			self.wait_random_time()
 
@@ -228,6 +228,10 @@ class Scraper:
 			self.driver.execute_script("arguments[0].click();", element)
 
 		element.send_keys(text)
+		if scrollThenClick:
+			print('test')
+			element.send_keys(Keys.ARROW_DOWN)
+			element.send_keys(Keys.ENTER)
 
 	# Wait random time before sending the keys to the element
 	def element_send_keys_by_xpath(self, xpath, text, delay = True):

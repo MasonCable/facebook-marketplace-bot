@@ -1,4 +1,4 @@
-from selenium.webdriver.common.keys import Keys
+import time
 
 # Remove and then publish each listing
 def update_listings(listings, type, scraper):
@@ -134,9 +134,11 @@ def add_fields_for_item(data, scraper):
 
 	# Scroll to "Category" select field
 	scraper.scroll_to_element('label[aria-label="Category"]')
-	# Expand category select
-	scraper.element_click('label[aria-label="Category"]')
-	scraper.element_send_keys('label[aria-label="Category"] input', data['Category'])	
+	# Expand category select	
+	scraper.element_click('label[aria-label="Category"]')	
+	scraper.element_send_keys('label[aria-label="Category"] input', data['Category'], scrollThenClick = True)	
+	# scraper.element_send_keys('label[aria-label="Category"] input', data['Category'])	
+	
 	# Expand condition select
 	scraper.element_click('label[aria-label="Condition"]')		
 	# scraper.element_click_by_xpath("//span[@dir='auto'][text()='Use - Like New']")
@@ -150,6 +152,8 @@ def add_fields_for_item(data, scraper):
 		scraper.element_click_by_xpath("//*[contains(text(), 'Hide from friends')]")
 	# Expand More details for other data to be added
 	scraper.element_click_by_xpath("//*[contains(text(), 'More Details')]")
+
+	time.sleep(100)
 	
 		
 	
